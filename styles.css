@@ -1,0 +1,74 @@
+/*Author: Victoria Liford*/
+
+:root{
+    --shadowBlue: 0 2px 3px darkblue;
+    --shadowBlack: 0 2px 3px black;
+    --borderBlue: 3px darkblue solid;
+    --borderBlack: 3px black solid;
+}
+
+
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto Mono', monospace;
+}
+
+body{
+    color: black;
+    background-color: white;
+}
+
+header{
+    background-image: url(mushroom-img.jpg);
+    background-repeat: repeat-x;
+    min-height: 100px;
+    color: darkblue;
+    text-shadow: 0 2px 2px black;
+    text-align: center;
+    justify-content: center;
+}
+
+header h2{
+    padding-top: 1.5em;
+}
+
+h4#prompt{
+    width: 100%;
+    padding-top: 1.5em;
+    text-align: center;
+}
+
+
+div#large-img{
+    width: 100%;
+    display: flex;
+}
+
+div#large-img img{
+    padding: 1.5em;
+    max-height: 230px;
+    margin: auto;
+}
+
+div#small-imgs{
+    width: 100%;
+    display: flex;
+}
+
+div#small-imgs img{
+    max-height: 110px;
+    padding: 1.5em;
+    margin: auto;
+}
+
+/*below, I create borders/shadows for imgs on hover*/
+div#large-img img:hover{
+    border:var(--borderBlue);
+    box-shadow: var(--shadowBlue);
+}
+
+div#small-imgs img:hover{
+    border:var(--borderBlue);
+    box-shadow: var(--shadowBlue);
+}
