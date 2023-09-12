@@ -81,10 +81,14 @@ function init() {
     Object.assign(smImg1, {
         id: "img1",
         src: initial_imgs[1],
-        alt: initial_alt[1],
-        //onclick: swapSmallImg(smImg1)   //when this isnt commented, it makes my lrgImg disappear
+        alt: initial_alt[1]
+        //onclick: swapImage(this)   //when this isnt commented, it makes #small-imgs disappear
         //onclick: swapImg(smImg1)
     });
+
+    //smImg1.onclick = swapImage(this);
+    //console.log(smImg1.attributes);
+
     Object.assign(smImg2, {
         id: "img2",
         src: initial_imgs[2],
@@ -123,16 +127,14 @@ function init() {
 } //end of init
 
 //tried to recreate my swap function in many different ways, and none worked so far
-function swapSmallImg(img) {
-    //var topSrc = document.getElementById('img0').src;
-    //var topSrc = lrgImg.src;
-    // var topImgObj = document.getElementById('large-img').firstChild;
-    var topSrc = topImgObj.src;
-    var switchSrc = img.src;
+function swapImage(myObj)
+{   //console.log(document.getElementById('large').attributes);
+    var topImg = document.getElementById('large-img').firstChild;
+    var clickImgSrc = myObj.src;
+    var topImgSrc = topImg.src;
 
-    // document.getElementById('large-img').replaceChild(img);
-    topImgObj.src = switchSrc;
-    img.src = topSrc;
+    myObj.src = topImgSrc;
+    document.getElementById('large-img').firstChild.src = clickImgSrc;
 }
 
 
