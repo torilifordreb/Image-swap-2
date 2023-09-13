@@ -7,7 +7,6 @@ var initial_imgs = [
     "imgs/toad-img.jpg",
     "imgs/bowser-jr-img.jpg",
     "imgs/shy-guy-img.png",
-    "imgs/koopa-img.png",
     "imgs/yoshi-img.jpg"
 ];
 
@@ -16,7 +15,6 @@ var initial_alt = [
     "Toad",
     "Bowser Jr.",
     "Shy Guy",
-    "Koopa Troopa",
     "Yoshi"
 ];
 
@@ -34,227 +32,91 @@ var extra_alt = [
     "Boo"
 ];
 
-document.onload = init();
+window.onload = createLrgImg();
+window.onload = createSmlImgs();
 
-//universal variables
-var lrgImg;
-var smImg1;
-var smImg2;
-var smImg3;
-var smImg4;
+function createLrgImg() {
+    //create img element for large-img div
+    var largeImg = document.createElement('img');
+    //set properties
+    largeImg.src = initial_imgs[0];
+    largeImg.id = "img0";
+    largeImg.alt = initial_alt;
+    //append to div parent
+    document.getElementById('large-img').appendChild(largeImg);
+}
 
 //function to load initial imgs 
-function init() {
-
-    //create large image
-    lrgImg = document.createElement("img");
-    //set large img src/alt/id
-    Object.assign(lrgImg, {
-        id: "img0",
-        src: initial_imgs[0],
-        alt: initial_alt[0]
-    });
-
-    //append the large img to large-img div
-    document.getElementById('large-img').appendChild(lrgImg);
-
-    //create smaller imgs
-    smImg1 = document.createElement("img");
-    smImg2 = document.createElement("img");
-    smImg3 = document.createElement("img");
-    smImg4 = document.createElement("img");
-
-    /*In this section, I tried to create an array to hold the image objects, then cycle through that array and fill their attributes/properties but I don't believe it worked*/
-    //var smImgArray = [smImg1, smImg2, smImg3, smImg4];
-    // //fill img attributes/properties
-    // for (i = 0; i <= smImgArray.length; i++) {
-    //     //set ids for small imgs
-    //     smImgArray[i].id = "img" + (i + 1);
-    //     //set srcs for small imgs
-    //     smImgArray[i].src = initial_imgs[i + 1]; //plus one because first img (img0) is the large image
-    //     //set alt text for small imgs
-    //     smImgArray[i].alt = initial_alt[i + 1];
-    // };
-
-
-
-    Object.assign(smImg1, {
-        id: "img1",
-        src: initial_imgs[1],
-        alt: initial_alt[1]
-        //onclick: swapImage(this)   //when this isnt commented, it makes #small-imgs disappear
-        //onclick: swapImg(smImg1)
-    });
-
-    //smImg1.onclick = swapImage(this);
-    //console.log(smImg1.attributes);
-
-    Object.assign(smImg2, {
-        id: "img2",
-        src: initial_imgs[2],
-        alt: initial_alt[2]
-        //onclick: swapImg(smImg2)
-    });
-    Object.assign(smImg3, {
-        id: "img3",
-        src: initial_imgs[3],
-        alt: initial_alt[3]
-        //onclick: swapImg(smImg3)
-    });
-    Object.assign(smImg4, {
-        id: "img4",
-        src: initial_imgs[4],
-        alt: initial_alt[4]
-        //onclick: swapImg(smImg4)
-    });
-
-
-    //append 4 small imgs to small-imgs div
-    document.getElementById('small-imgs').appendChild(smImg1);
-    document.getElementById('small-imgs').appendChild(smImg2);
-    document.getElementById('small-imgs').appendChild(smImg3);
-    document.getElementById('small-imgs').appendChild(smImg4);
-
-    /*another loop that used the objects in the array i commented out above*/
-    // //counter
-    // var y = 0;
-    // //loop to append child(ren) to small-imgs div
-    // do{
-    //     document.getElementById('small-imgs').appendChild(smImgArray[y]);
-    //     y++;
-    // }while(y < smImgArray.length);
-
-} //end of init
-
-//tried to recreate my swap function in many different ways, and none worked so far
-function swapImage(myObj)
-{   //console.log(document.getElementById('large').attributes);
-    var topImg = document.getElementById('large-img').firstChild;
-    var clickImgSrc = myObj.src;
-    var topImgSrc = topImg.src;
-
-    myObj.src = topImgSrc;
-    document.getElementById('large-img').firstChild.src = clickImgSrc;
+function createSmlImgs() {
+    //loop to create small img items
+    for (var i = 0; i < initial_imgs.length; i++) {
+        var p = document.createElement('img');
+        p.id = "img" + (i + 1);
+        p.src = initial_imgs[i];
+        p.alt = initial_alt[i];
+        //p.className = "smallClass";
+        document.getElementById('small-imgs').appendChild(p);
+    }
 }
 
 
-//here's where I try the dblclick event listener
-//it registers the double click, because the popup window comes up, but nothing else works.
-document.getElementById("large-img").firstChild.addEventListener('dblclick',
-    function () {
+//dblclick listener for large img
+document.getElementById("img0").addEventListener('dblclick',
+    function (e) {
+        console.log(e.target.id);
+        //if the clicked image's alt text exists in the initial_alt array
+        if (initial_alt.indexOf(e.target.alt) > -1) {
+            //set large img to extra_img, 0 index
+            document.getElementById('img0').src = extra_imgs[0];
+            document.getElementById('img0').alt = extra_alt[0];
 
-        var imageGroupCheck = document.getElementById('large-img').firstChild.src;
-
-        console.log(imageGroupCheck);
-
-        //if double click, confirm they want to change the images
-        if (confirm("Would you like more options?")) {
-
-            //pull the src of the first child of the small-images div into a variable
-            
-
-            
-
-            //check if current large img belongs in initial_imgs or extra_imgs (would return -1 if it never occurs in initial img)
-            // switch(initial_imgs.indexOf(imageGroupCheck)){
-            //     case 1: 
-                
-            //     case -1:
-                    
-            // }
-
-
-            if (initial_imgs.indexOf(imageGroupCheck) != -1) { //so, if large img src is in array
-
-                // //remove all the current small imgs (works but results in error)
-                // while (document.getElementById('small-imgs').hasChildNodes) {
-                //     document.getElementById('small-imgs').removeChild(document.getElementById('small-imgs').lastChild);
-                // }
-
-                // smImg1.src = extra_imgs[0];
-                // smImg2.src = extra_imgs[1];
-                // smImg3.src = extra_imgs[2];
-                // smImg4.src = extra_imgs[3];
-
-
+            //outer for loop to create variable names for ids
+            for(var i = 0; i <= initial_alt.length; i++) {
+                //start at img1 (img0 is taken)
+                var imgId = "img" + (i + 1);
+                document.getElementById(imgId).src = extra_imgs[i];
+                document.getElementById(imgId).alt = extra_alt[i];
             }
 
+        //else, if large-img is in the extra_img group
+        } else {
+            //set large img to initial_img, 0 index
+            document.getElementById('img0').src = initial_imgs[0];
+            document.getElementById('img0').alt = initial_alt[0];
 
-
-
-
-
-            // //if the small imgs are the initial_img array
-            // if (isInitialImg) {
-
-            //     exImg1 = document.createElement("img");
-            //     exImg2 = document.createElement("img");
-            //     exImg3 = document.createElement("img");
-            //     exImg4 = document.createElement("img");
-
-            //     Object.assign(exImg1, {
-            //         id: "img1-1",
-            //         src: extra_imgs[0],
-            //         alt: extra_alt[0],
-            //     });
-            //     Object.assign(exImg2, {
-            //         id: "img2-1",
-            //         src: extra_imgs[1],
-            //         alt: extra_alt[1]
-            //         //onclick: swapImg(smImg2)
-            //     });
-            //     Object.assign(exImg3, {
-            //         id: "img3-1",
-            //         src: extra_imgs[2],
-            //         alt: extra_alt[2]
-            //         //onclick: swapImg(smImg3)
-            //     });
-            //     Object.assign(exImg4, {
-            //         id: "img4-1",
-            //         src: extra_imgs[3],
-            //         alt: extra_alt[3]
-            //         //onclick: swapImg(smImg4)
-            //     });
-
-            //     document.getElementById('small-imgs').appendChild(exImg1);
-            //     document.getElementById('small-imgs').appendChild(exImg2);
-            //     document.getElementById('small-imgs').appendChild(exImg3);
-            //     document.getElementById('small-imgs').appendChild(exImg4);
-            // }
-            // else {
-
-            // }
+            //set small imgs to all initial_imgs
+            for (var i = 0; i <= initial_imgs.length; i++) {
+                var imgId = "img" + (i + 1);
+                document.getElementById(imgId).src = initial_imgs[i];
+                document.getElementById(imgId).alt = initial_alt[i];
+            }
         }
     }
-); //end dblclick event listener
+);
 
 
+//set eventlisteners for bottom pictures to switch to top picture
+for (var i = 0; i <= initial_imgs.length; i++) {
+    //store the idNames of the imgs in a variable
+    var idName = "img" + (i + 1);
+    //store object in variable 
+    var myImg = document.getElementById(idName);
 
-// var e1 = document.getElementById('html-img0');
-// //add event listener to first img
-// e1.addEventListener('dblclick',
-//     function () {
-//         if (confirm("Would you like more options?")) {
-//             //add a new array to hold 5 srcs
-//             var newArray = [5];
-//             //make first array object the img at the top of page
-//             newArray[0] = e1.src;
-//             //fill rest of array with other pictures from extraImgs array
-//             for (var i = 1; i <= 5; i++) {
-//                 newArray[i] = extra_imgs[i - 1];
-//             }
+    //for img 1-4, set event listener
+    myImg.addEventListener('click',       //eventlistener here gives me an error in the browser
+        function (e) {
+            console.log(e.target.src);
+            //pull data from clicked img
+            var clickedSrc = e.target.src;
+            var clickedAlt = e.target.alt;
+            //set large imag to clicked img
+            document.getElementById('img0').src = clickedSrc;
+            document.getElementById('img0').alt = clickedAlt;
+        }
+    );
+}
 
 
-//             //displays new imgs at bottom
-//             for (var i = 0; i <= initial_imgs.length; i++) {
-//                 var numStr = i.toString();
-//                 var srcName = "html-img";
-//                 var fullName = srcName.concat(numStr);
-//                 document.getElementById(fullName).src = newArray[i];
-//             }
-//         }
-//     }
-// );
 
 
 
